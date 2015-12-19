@@ -16,6 +16,10 @@
 			width: 100%;
 		}
 
+		html {
+		    overflow-y:scroll;
+		}
+
 		#wrapper {
 			height: 100%;
 			width: 100%;
@@ -58,6 +62,12 @@
 
 			transition: all 1s ease;
 		}
+
+		#btnTogglePreview {
+			position: fixed;
+			right: 10px;
+			bottom: 10px;
+		}
 	</style>
 </head>
 <body>
@@ -71,8 +81,11 @@
 		<div id="output">
 			<iframe id="outputFrame" frameborder="0"></iframe>
 		</div>
+
+		<button id="btnTogglePreview">Hide Preview</button>
 	</div>
 
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="lodash.min.js"></script>
 
 	<!-- Firebase -->
@@ -121,6 +134,14 @@
 	  	var loader = document.getElementById("loader");
 	  	loader.style.opacity = "0";
 	  	loader.style.height = "0";
+	  });
+
+	  var $toggle = $("#btnTogglePreview");
+	  $toggle.click(function() {
+	  	var $preview = $("#output");
+	  	$preview.toggle(200, function onComplete() {
+	  		$toggle.html($preview.is(":visible") ? "Hide Preview" : "Show Preview");
+	  	});
 	  });
 	</script>
 </body>
