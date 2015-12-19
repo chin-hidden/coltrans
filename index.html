@@ -142,7 +142,9 @@
                 myIframe.contentWindow.document.body.appendChild(script);
                 iframeConfigured = true;
             } else {
-                myIframe.contentWindow.MathJax.Hub.Typeset();
+                if ($("#output").is(":visible")) {
+                    myIframe.contentWindow.MathJax.Hub.Typeset();
+                }
             }
         }
 
