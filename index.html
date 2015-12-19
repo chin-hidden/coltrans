@@ -85,6 +85,7 @@
 	<script src="codemirror-5.9/mode/css/css.js"></script>
 	<script src="codemirror-5.9/mode/xml/xml.js"></script>
 	<script src="codemirror-5.9/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="emmet.js"></script>
 
 	<!-- Firepad -->
 	<link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.2.0/firepad.css" />
@@ -93,24 +94,27 @@
 
 	<script>
 	  var firepadRef = new Firebase('https://burning-heat-250.firebaseio.com');
-	  var codeMirror = CodeMirror(document.getElementById('firepad'), {
+	  var editor = CodeMirror(document.getElementById('firepad'), {
 	  	lineNumbers: true,
 	  	lineWrapping: true,
 	  	mode: "htmlmixed",
+	  	profile: 'xhtml',
 	  });
+
+	  emmetCodeMirror(editor);
 
 	  var frame = document.getElementById("outputFrame");
 
 	 function updateView() {
 	  	frame.src = "data:text/html;charset=utf-8," + encodeURI(firepad.getText());
 	  	// frame.contentWindow.document.open();
-	  	// frame.contentWindow.document.write(codeMirror.getValue());
+	  	// frame.contentWindow.document.write(editor.getValue());
 	  	// frame.contentWindow.document.close();
 	  }
 
-	  codeMirror.on("changes", _.debounce(updateView, 450));
+	  editor.on("changes", _.debounce(updateView, 450));
 
-	  var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+	  var firepad = Firepad.fromCodeMirror(firepadRef, editor,
 	      { richTextShortcuts: false, richTextToolbar: false, defaultText: 'Hello, World!' });
 
 	  firepad.on("ready", function() {
