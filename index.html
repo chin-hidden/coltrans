@@ -84,7 +84,9 @@
     <div id="wrapper">
         <div id="firepad"></div>
         <div id="output">
-            <iframe id="outputFrame" frameborder="0"></iframe>
+            <iframe id="outputFrame"
+                    frameborder="0"
+                    sandbox="allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts"></iframe>
         </div>
 
         <button id="btnTogglePreview">Hide Preview</button>
@@ -119,15 +121,30 @@
             profile: 'xhtml',
         });
 
+
         emmetCodeMirror(editor);
 
         var frame = document.getElementById("outputFrame");
+        var iframeConfigured = false;
 
         function updateView() {
-            frame.src = "data:text/html;charset=utf-8," + encodeURI(firepad.getText());
-        }
+            // frame.src = "data:text/html;charset=utf-8," + encodeURI(firepad.getText());
+            $("#outputFrame")
+                .contents()
+                .find("body")
+                .html(firepad.getText());
 
-        editor.on("changes", _.debounce(updateView, 450));
+            var myIframe = document.getElementById("outputFrame");
+            if (!iframeConfigured) {
+                var script = myIframe.contentWindow.document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+                myIframe.contentWindow.document.body.appendChild(script);
+                iframeConfigured = true;
+            } else {
+                myIframe.contentWindow.MathJax.Hub.Typeset();
+            }
+        }
 
         var firepad = Firepad.fromCodeMirror(firepadRef, editor, {
             richTextShortcuts: false,
@@ -136,6 +153,9 @@
         });
 
         firepad.on("ready", function() {
+            updateView();
+            editor.on("changes", _.debounce(updateView, 450));
+
             var loader = document.getElementById("loader");
             loader.style.opacity = "0";
             loader.style.height = "0";
