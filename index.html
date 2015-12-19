@@ -108,7 +108,7 @@
 	  	// frame.contentWindow.document.close();
 	  }
 
-	  codeMirror.on("changes", _.debounce(updateView, 200));
+	  codeMirror.on("changes", _.debounce(updateView, 450));
 
 	  var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
 	      { richTextShortcuts: false, richTextToolbar: false, defaultText: 'Hello, World!' });
