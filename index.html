@@ -1,153 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
-	<link rel="stylesheet" href="http://css-spinners.com/css/spinner/flower.css" type="text/css">
-	<style>
-		*, *:before, *:after {
-		  box-sizing: border-box;
-		}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="http://css-spinners.com/css/spinner/flower.css" type="text/css">
+    <style>
+        *, *:before, *:after {
+          box-sizing: border-box;
+        }
 
-		html, body {
-			height: 100%;
-			width: 100%;
-		}
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
 
-		html {
-		    overflow-y:scroll;
-		}
+        html {
+            overflow-y:scroll;
+        }
 
-		#wrapper {
-			height: 100%;
-			width: 100%;
-			display: flex;
-			align-items: stretch;
-		}
+        #wrapper {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: stretch;
+        }
 
-		#firepad {
-			border-right: 1px dotted #ccc;
-			padding-right: 5px;
-			margin-right: 5px;
-			height: 100%;
-			min-width: 40%;
-		}
+        #firepad {
+            border-right: 1px dotted #ccc;
+            padding-right: 5px;
+            margin-right: 5px;
+            height: 100%;
+            min-width: 40%;
+        }
 
-		#output {
-			flex-grow: 1;
-			height: 100%;
-		}
+        #output {
+            flex-grow: 1;
+            height: 100%;
+        }
 
-		iframe {
-			width: 100%;
-			height: 100%;
-		}
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
 
-		.CodeMirror pre {
-			font-family: monospace;
-		}
+        .CodeMirror pre {
+            font-family: monospace;
+        }
 
-		#loader {
-			background: rgba(255, 255, 255, 0.5);
-			z-index: 9999;
-			height: 100vh;
-			width: 100vw;
-			position: fixed;
+        #loader {
+            background: rgba(255, 255, 255, 0.5);
+            z-index: 9999;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
 
-			display: flex;
-			align-items: center;
-			justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-			transition: all 1s ease;
-		}
+            transition: all 1s ease;
+        }
 
-		#btnTogglePreview {
-			position: fixed;
-			right: 10px;
-			bottom: 10px;
-		}
+        #btnTogglePreview {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+        }
 
-		/* Well, it obstructs my gf's view, so... */
-		a.powered-by-firepad {
-			display: none;
-		}
-	</style>
+        /* Well, it obstructs my gf's view, so... */
+        a.powered-by-firepad {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-	<div id="loader">
-		<div class="flower-loader">
-		  Loading…
-		</div>
-	</div>
-	<div id="wrapper">
-		<div id="firepad"></div>
-		<div id="output">
-			<iframe id="outputFrame" frameborder="0"></iframe>
-		</div>
+    <div id="loader">
+        <div class="flower-loader">
+          Loading…
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="firepad"></div>
+        <div id="output">
+            <iframe id="outputFrame" frameborder="0"></iframe>
+        </div>
 
-		<button id="btnTogglePreview">Hide Preview</button>
-	</div>
+        <button id="btnTogglePreview">Hide Preview</button>
+    </div>
 
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="lodash.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="lodash.min.js"></script>
 
-	<!-- Firebase -->
-	<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 
-	<!-- CodeMirror -->
-	<script src="codemirror-5.9/lib/codemirror.js"></script>
-	<link rel="stylesheet" href="codemirror-5.9/lib/codemirror.css">
-	<script src="codemirror-5.9/mode/javascript/javascript.js"></script>
-	<script src="codemirror-5.9/mode/css/css.js"></script>
-	<script src="codemirror-5.9/mode/xml/xml.js"></script>
-	<script src="codemirror-5.9/mode/htmlmixed/htmlmixed.js"></script>
-	<script src="emmet.js"></script>
+    <!-- CodeMirror -->
+    <script src="codemirror-5.9/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-5.9/lib/codemirror.css">
+    <script src="codemirror-5.9/mode/javascript/javascript.js"></script>
+    <script src="codemirror-5.9/mode/css/css.js"></script>
+    <script src="codemirror-5.9/mode/xml/xml.js"></script>
+    <script src="codemirror-5.9/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="emmet.js"></script>
 
-	<!-- Firepad -->
-	<link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.2.0/firepad.css" />
-	<script src="https://cdn.firebase.com/libs/firepad/1.2.0/firepad.min.js"></script>
+    <!-- Firepad -->
+    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.2.0/firepad.css" />
+    <script src="https://cdn.firebase.com/libs/firepad/1.2.0/firepad.min.js"></script>
 
 
-	<script>
-	  var firepadRef = new Firebase('https://burning-heat-250.firebaseio.com');
-	  var editor = CodeMirror(document.getElementById('firepad'), {
-	  	lineNumbers: true,
-	  	lineWrapping: true,
-	  	mode: "htmlmixed",
-	  	profile: 'xhtml',
-	  });
+    <script>
+        var firepadRef = new Firebase('https://burning-heat-250.firebaseio.com');
+        var editor = CodeMirror(document.getElementById('firepad'), {
+            lineNumbers: true,
+            lineWrapping: true,
+            mode: "htmlmixed",
+            profile: 'xhtml',
+        });
 
-	  emmetCodeMirror(editor);
+        emmetCodeMirror(editor);
 
-	  var frame = document.getElementById("outputFrame");
+        var frame = document.getElementById("outputFrame");
 
-	 function updateView() {
-	  	frame.src = "data:text/html;charset=utf-8," + encodeURI(firepad.getText());
-	  	// frame.contentWindow.document.open();
-	  	// frame.contentWindow.document.write(editor.getValue());
-	  	// frame.contentWindow.document.close();
-	  }
+        function updateView() {
+            frame.src = "data:text/html;charset=utf-8," + encodeURI(firepad.getText());
+        }
 
-	  editor.on("changes", _.debounce(updateView, 450));
+        editor.on("changes", _.debounce(updateView, 450));
 
-	  var firepad = Firepad.fromCodeMirror(firepadRef, editor,
-	      { richTextShortcuts: false, richTextToolbar: false, defaultText: 'Hello, World!' });
+        var firepad = Firepad.fromCodeMirror(firepadRef, editor, {
+            richTextShortcuts: false,
+            richTextToolbar: false,
+            defaultText: 'Hello, World!'
+        });
 
-	  firepad.on("ready", function() {
-	  	var loader = document.getElementById("loader");
-	  	loader.style.opacity = "0";
-	  	loader.style.height = "0";
-	  });
+        firepad.on("ready", function() {
+            var loader = document.getElementById("loader");
+            loader.style.opacity = "0";
+            loader.style.height = "0";
+        });
 
-	  var $toggle = $("#btnTogglePreview");
-	  $toggle.click(function() {
-	  	var $preview = $("#output");
-	  	$preview.toggle(200, function onComplete() {
-	  		$toggle.html($preview.is(":visible") ? "Hide Preview" : "Show Preview");
-	  	});
-	  });
-	</script>
+        firepad.on("synced", function(synced) {});
+
+        var $toggle = $("#btnTogglePreview");
+
+        $toggle.click(function() {
+            var $preview = $("#output");
+            $preview.toggle(200, function onComplete() {
+                $toggle.html($preview.is(":visible") ? "Hide Preview" : "Show Preview");
+            });
+        });
+    </script>
 </body>
 </html>
