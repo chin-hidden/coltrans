@@ -171,7 +171,7 @@
             var $preview = $("#output");
             $preview.toggle(200, function onComplete() {
                 $toggle.html($preview.is(":visible") ? "Hide Preview" : "Show Preview");
-                $("#outputFrame").contentWindow.MathJax.Hub.Typeset();
+                document.getElementById("outputFrame").contentWindow.MathJax.Hub.Typeset();
             });
         });
     </script>
