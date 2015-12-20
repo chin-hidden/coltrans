@@ -143,10 +143,30 @@
                 script.type = "text/javascript";
                 script.src = "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
                 myIframe.contentWindow.document.body.appendChild(script);
+
+                script = myIframe.contentWindow.document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "//code.jquery.com/jquery-2.1.4.min.js";
+                myIframe.contentWindow.document.body.appendChild(script);
+
+                script = myIframe.contentWindow.document.createElement("script");
+                script.type = "text/javascript";
+                var content = myIframe.contentWindow.document.createTextNode(`
+                    function refresh() {
+                        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+                        var tempScrollTop = $(window).scrollTop();
+                        MathJax.Hub.Queue(function() {
+                            $(window).scrollTop(tempScrollTop);
+                        });
+                    }`);
+                script.appendChild(content);
+                myIframe.contentWindow.document.body.appendChild(script);
+
                 iframeConfigured = true;
             } else {
                 if ($("#output").is(":visible")) {
-                    myIframe.contentWindow.MathJax.Hub.Typeset();
+                    // myIframe.contentWindow.MathJax.Hub.Typeset();
+                    myIframe.contentWindow.refresh();
                 }
             }
         }
