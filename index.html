@@ -63,7 +63,7 @@
             transition: all 1s ease;
         }
 
-        #btnTogglePreview {
+        #buttonGroup {
             position: fixed;
             right: 10px;
             bottom: 10px;
@@ -89,7 +89,10 @@
                     sandbox="allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts"></iframe>
         </div>
 
-        <button id="btnTogglePreview">Hide Preview</button>
+        <div id="buttonGroup">
+            <button id="btnTogglePreview">Hide Preview</button>
+            <button id="btnReloadPreview">Reload Preview</button>
+        </div>
     </div>
 
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -156,7 +159,7 @@
 
         firepad.on("ready", function() {
             updateView();
-            editor.on("changes", _.debounce(updateView, 450));
+            // editor.on("changes", _.debounce(updateView, 450));
 
             var loader = document.getElementById("loader");
             loader.style.opacity = "0";
@@ -166,14 +169,17 @@
         firepad.on("synced", function(synced) {});
 
         var $toggle = $("#btnTogglePreview");
+        var $reload = $("#btnReloadPreview");
 
         $toggle.click(function() {
             var $preview = $("#output");
             $preview.toggle(200, function onComplete() {
                 $toggle.html($preview.is(":visible") ? "Hide Preview" : "Show Preview");
-                document.getElementById("outputFrame").contentWindow.MathJax.Hub.Typeset();
+                updateView();
             });
         });
+
+        $reload.click(updateView);
     </script>
 </body>
 </html>
