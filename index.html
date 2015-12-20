@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Document</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
-    <link rel="stylesheet" href="http://css-spinners.com/css/spinner/flower.css" type="text/css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="//css-spinners.com/css/spinner/flower.css" type="text/css">
     <style>
         *, *:before, *:after {
           box-sizing: border-box;
@@ -92,11 +92,11 @@
         <button id="btnTogglePreview">Hide Preview</button>
     </div>
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="lodash.min.js"></script>
 
     <!-- Firebase -->
-    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="//cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 
     <!-- CodeMirror -->
     <script src="codemirror-5.9/lib/codemirror.js"></script>
@@ -108,12 +108,12 @@
     <script src="emmet.js"></script>
 
     <!-- Firepad -->
-    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.2.0/firepad.css" />
-    <script src="https://cdn.firebase.com/libs/firepad/1.2.0/firepad.min.js"></script>
+    <link rel="stylesheet" href="//cdn.firebase.com/libs/firepad/1.2.0/firepad.css" />
+    <script src="//cdn.firebase.com/libs/firepad/1.2.0/firepad.min.js"></script>
 
 
     <script>
-        var firepadRef = new Firebase('https://burning-heat-250.firebaseio.com');
+        var firepadRef = new Firebase('//burning-heat-250.firebaseio.com');
         var editor = CodeMirror(document.getElementById('firepad'), {
             lineNumbers: true,
             lineWrapping: true,
@@ -138,7 +138,7 @@
             if (!iframeConfigured) {
                 var script = myIframe.contentWindow.document.createElement("script");
                 script.type = "text/javascript";
-                script.src = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+                script.src = "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
                 myIframe.contentWindow.document.body.appendChild(script);
                 iframeConfigured = true;
             } else {
