@@ -153,6 +153,7 @@
                 script.type = "text/javascript";
                 var content = myIframe.contentWindow.document.createTextNode(`
                     function refresh() {
+                        MathJax.Extension['TeX/AMSmath'].startNumber = 0;
                         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
                         var tempScrollTop = $(window).scrollTop();
                         MathJax.Hub.Queue(function() {
